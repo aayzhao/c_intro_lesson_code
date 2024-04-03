@@ -1,9 +1,10 @@
 // main.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include "pch.h"
 #include <iostream>
+#include <algorithm>
 #include "Hello.h"
+
 
 int main()
 {
@@ -17,6 +18,21 @@ int main()
 
     // call our object function
     myObj.print_hw_obj_method();
+
+    // take in user input
+    const int name_len = 50;
+    char name[name_len]; // stack allocated array
+    std::cout << "What's your name?" << std::endl;
+    std::cin.getline(name, name_len); // save user input to stack allocated array
+
+    // copy stack allocated array to heap allocated array
+    char* heap_name = new char[name_len];
+    std::copy(std::begin(name), std::end(name), heap_name);
+
+    std::cout << "Nice to meet you, " << name << std::endl;
+    std::cout << "Your name on heap: " << heap_name << std::endl;
+
+    delete[] heap_name; // not necessary in this case, but is best practice
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
